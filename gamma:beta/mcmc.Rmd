@@ -1,0 +1,115 @@
+---
+title: "Mcmc1"
+author: "Qinzhe Wang"
+date: "11/15/2018"
+output: html_document
+---
+```{r}
+
+set.seed(0003409476)
+
+x.theta <- seq(0.001,20,length=1000)
+
+# Gamma distribution
+# different alpha and beta
+
+#####
+#alpha <- a
+#beta <-  b
+#pi.theta <- 1/(beta^alpha)/gamma(alpha)*x.theta^(alpha-1)*exp(-x.theta/beta)
+
+#plot(x.theta,pi.theta,type='l')
+#####
+
+# plots of four Gamma distribution
+
+par(mfrow=c(2,2))
+alpha <- 2; beta <- 1
+
+pi.theta <- 1/(beta^alpha)/gamma(alpha)*x.theta^(alpha-1)*exp(-x.theta/beta)
+
+plot(x.theta,pi.theta,type='l')
+
+alpha <- 2; beta <- 5
+
+
+pi.theta <- 1/(beta^alpha)/gamma(alpha)*x.theta^(alpha-1)*exp(-x.theta/beta)
+
+plot(x.theta,pi.theta,type='l')
+
+alpha <- 5; beta <- 1
+
+pi.theta <- 1/(beta^alpha)/gamma(alpha)*x.theta^(alpha-1)*exp(-x.theta/beta)
+
+plot(x.theta,pi.theta,type='l')
+
+alpha <- 5; beta <- 5
+
+pi.theta <- 1/(beta^alpha)/gamma(alpha)*x.theta^(alpha-1)*exp(-x.theta/beta)
+
+
+plot(x.theta,pi.theta,type='l')
+
+
+
+
+# poisson distribution with gamma prior
+
+alpha <- 2; beta <- 1
+
+n <- 20
+
+x.data <- rpois(n,3)
+
+x.sum <- sum(x.data)
+
+# posterior is gamma(x.sum+alpha, 1/(n+1/beta))
+
+alpha.posterior <- alpha+x.sum; beta.posterior <- 1/(n+1/beta)
+
+pi.theta.posterior <- 1/(beta.posterior^alpha.posterior)/gamma(alpha.posterior)*x.theta^(alpha.posterior-1)*exp(-x.theta/beta.posterior)
+
+alpha.posterior*beta.posterior; x.sum/n
+
+
+theta.0 <- x.sum/n
+
+#theta.0 <- 0.2
+
+n.mcmc <- 10000
+theta.seq <- rep(0,n.mcmc)
+
+r.seq <- rep(0,n.mcmc)
+
+theta.seq[1] <- theta.0
+
+for(i.mcmc in 2:n.mcmc){
+	theta.0 <- theta.seq[i.mcmc-1]
+	theta.star <- rnorm(1,theta.0,sd=0.1)
+	r <- ((theta.star)^(x.sum+alpha-1)*exp(-theta.star*(n+1/beta)))/((theta.0)^(x.sum+alpha-1)*exp(-theta.0*(n+1/beta)))
+	r.seq[i.mcmc] <- r
+	if (runif(1) < min(r,1)) {
+		theta.seq[i.mcmc] <- theta.star
+	}
+	else{
+		theta.seq[i.mcmc] <- theta.0
+	}
+}
+
+
+# burn <- n, say,
+burn <- 2001
+
+theta.mcmc <- theta.seq[burn:n.mcmc]
+
+
+par(mfrow=c(1,2))
+
+hist(theta.mcmc,prob=T);lines(density(theta.mcmc))
+x.axis <- seq(0.01,8,length=1000)
+y.axis <- 1/(beta.posterior^alpha.posterior)/gamma(alpha.posterior)*x.axis^(alpha.posterior-1)*exp(-x.axis/beta.posterior)
+
+lines(x.axis,y.axis,col='red')
+
+
+```
