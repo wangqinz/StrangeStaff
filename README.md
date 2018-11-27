@@ -1,4 +1,4 @@
-#### MCMC 
+#### * MCMC 
 #### Newton Method
 #### Jackknife
 #### Some ugly but useful staff
