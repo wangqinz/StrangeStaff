@@ -1,0 +1,57 @@
+Salmon 		# FA 80 72 	# 250 128 114
+
+IndianRed 	# CD 5C 5C	# 20 92 92
+
+MidnightBlue	# 19 19 70	# 25 25 112
+
+DeepSkyBlue	# 00 BF FF	# 0 191 255
+
+DimGray		# 69 69 69	# 105 105 105
+
+Maroon		# 80 00 00	# 128 0 0
+
+RoyalBlue	# 41 69 E1	# 65 105 225	
+
+MediumSeaGreen	# 3C B3 71	# 60 179 113
+
+LightCyan	# E0 FF FF	# 224 255 255
+
+DarkSlateBlue	# 48 3D 8B	# 72 61 139
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
